@@ -14,20 +14,21 @@ def dump_pickle(obj, filename):
 def read_dataframe(filename: str):
     df = pd.read_parquet(filename)
 
-    df['duration'] = df.lpep_dropoff_datetime - df.lpep_pickup_datetime
+    df['duration'] = df.dropOff_datetime - df.pickup_datetime
     df.duration = df.duration.apply(lambda td: td.total_seconds() / 60)
     df = df[(df.duration >= 1) & (df.duration <= 60)]
 
-    categorical = ['PULocationID', 'DOLocationID']
+    categorical = ['PUlocationID', 'DOlocationID']
     df[categorical] = df[categorical].astype(str)
 
     return df
 
 
 def preprocess(df: pd.DataFrame, dv: DictVectorizer, fit_dv: bool = False):
-    df['PU_DO'] = df['PULocationID'] + '_' + df['DOLocationID']
+    df['PU_DO'] = df['PUlocationID'] + '_' + df['DOlocationID']
     categorical = ['PU_DO']
-    numerical = ['trip_distance']
+    #numerical = ['trip_distance']
+    numerical = []
     dicts = df[categorical + numerical].to_dict(orient='records')
     if fit_dv:
         X = dv.fit_transform(dicts)
@@ -36,7 +37,7 @@ def preprocess(df: pd.DataFrame, dv: DictVectorizer, fit_dv: bool = False):
     return X, dv
 
 
-def run(raw_data_path: str, dest_path: str, dataset: str = "green"):
+def run(raw_data_path: str, dest_path: str, dataset: str = "fhv"):
     # load parquet files
     df_train = read_dataframe(
         os.path.join(raw_data_path, f"{dataset}_tripdata_2021-01.parquet")
