@@ -8,9 +8,18 @@ from optuna.samplers import TPESampler
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_tracking_uri("http://127.0.0.1:5000") 
+"""
+# as the server is already running so the uri is take from the stacktrac after running the command `mlflow ui --backend-store-uri sqlite:///mlflow.db`
+[2023-05-28 15:11:25 +0530] [6944] [INFO] Starting gunicorn 20.1.0
+[2023-05-28 15:11:25 +0530] [6944] [INFO] Listening at: http://127.0.0.1:5000 (6944)
+[2023-05-28 15:11:25 +0530] [6944] [INFO] Using worker: sync
+[2023-05-28 15:11:25 +0530] [6945] [INFO] Booting worker with pid: 6945
+[2023-05-28 15:11:25 +0530] [6946] [INFO] Booting worker with pid: 6946
+[2023-05-28 15:11:25 +0530] [6947] [INFO] Booting worker with pid: 6947
+[2023-05-28 15:11:25 +0530] [6948] [INFO] Booting worker with pid: 6948
+"""
 mlflow.set_experiment("random-forest-hyperopt")
-
 
 def load_pickle(filename):
     with open(filename, "rb") as f_in:
@@ -43,16 +52,30 @@ def run_optimization(data_path: str, num_trials: int):
             'n_jobs': -1
         }
 
+        mlflow.log_params(**params)
+
         rf = RandomForestRegressor(**params)
         rf.fit(X_train, y_train)
         y_pred = rf.predict(X_val)
         rmse = mean_squared_error(y_val, y_pred, squared=False)
+
+        mlflow.log_metric("rmse", rmse)
 
         return rmse
 
     sampler = TPESampler(seed=42)
     study = optuna.create_study(direction="minimize", sampler=sampler)
     study.optimize(objective, n_trials=num_trials)
+    """
+    here in the above code we are just taking a study with "sampler=TPESampler" and 
+    trying to optimizing the objective func
+    "objective" func is consisting 
+    > of hyper-paramters provided to the Regressor, 
+    > then fitting the model, 
+    > then pridicting 
+    > comparing the true values <> predicted values and returning a rsme
+    
+    """
 
 
 if __name__ == '__main__':

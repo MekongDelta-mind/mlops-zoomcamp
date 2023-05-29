@@ -5,6 +5,7 @@ import click
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
+import mlflow
 
 def load_pickle(filename: str):
     with open(filename, "rb") as f_in:
@@ -18,7 +19,9 @@ def load_pickle(filename: str):
     help="Location where the processed NYC taxi trip data was saved"
 )
 def run_train(data_path: str):
-
+    
+    mlflow.autolog()
+    
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
 
@@ -30,4 +33,6 @@ def run_train(data_path: str):
 
 
 if __name__ == '__main__':
+    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    mlflow.set_experiment("green-nyc-taxi-experiment")
     run_train()

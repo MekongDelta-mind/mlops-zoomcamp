@@ -49,7 +49,7 @@ def train_and_log_model(data_path, params):
 )
 @click.option(
     "--top_n",
-    default=5,
+    default=5, # here the function is defaulting the top_n to 5
     type=int,
     help="Number of top models that need to be evaluated to decide which one to promote"
 )
@@ -57,6 +57,7 @@ def run_register_model(data_path: str, top_n: int):
 
     client = MlflowClient()
 
+    # VERY IMP step of RETRIEVING THE results of prev run in this run 
     # Retrieve the top_n model runs and log the models
     experiment = client.get_experiment_by_name(HPO_EXPERIMENT_NAME)
     runs = client.search_runs(
@@ -65,15 +66,25 @@ def run_register_model(data_path: str, top_n: int):
         max_results=top_n,
         order_by=["metrics.rmse ASC"]
     )
-    for run in runs:
+    for run in runs: 
+        # from the selected few runs we are looping through the data folder and testing using the test pickle file
+        # p2bn: That is the models are trained and saved as pickle filse so that it is easy to use them later
         train_and_log_model(data_path=data_path, params=run.data.params)
 
-    # Select the model with the lowest test RMSE
+    # Select the model with the lowest test RMSE from EXPERIMENT_NAME = "random-forest-best-models"
     experiment = client.get_experiment_by_name(EXPERIMENT_NAME)
-    # best_run = client.search_runs( ...  )[0]
+    best_run = client.search_runs(
+        experiment_ids=experiment.experiment_id,
+        run_view_type=ViewType.ACTIVE_ONLY,
+        max_results=top_n,
+        order_by=["metrics.rmse ASC"]
+    )[0] # get the experiment_id from the server with lowest RMSE
 
     # Register the best model
     # mlflow.register_model( ... )
+    best_run_id = best_run.info.run_id
+    model_uri = f"runs:/{best_run_id}/model"
+    mlflow.register_model(model_uri=model_uri, name="green_nyc-taxi_best-random-regressor")
 
 
 if __name__ == '__main__':
