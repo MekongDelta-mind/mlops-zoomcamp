@@ -48,7 +48,7 @@
 [See code here](batch/)
 
 
-## 4.6 MLOps Zoomcamp 4.6 - Batch: Scheduling batch scoring jobs with Prefect
+## 4.6 - Batch: Scheduling batch scoring jobs with Prefect
 
 **Note:** There are several changes to deployment in Prefect 2.3.1 since 2.0b8:
 - `DeploymentSpec` in 2.0b8 now becomes `Deployment`. 
