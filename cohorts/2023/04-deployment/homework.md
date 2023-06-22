@@ -66,7 +66,7 @@ Which command you need to execute for that?
 Now let's put everything into a virtual environment. We'll use pipenv for that.
 
 Install all the required libraries. Pay attention to the Scikit-Learn version:
-check the starter notebook for details. 
+it should be `scikit-learn==1.2.2`. 
 
 After installing the libraries, pipenv creates two files: `Pipfile`
 and `Pipfile.lock`. The `Pipfile.lock` file keeps the hashes of the
@@ -164,5 +164,5 @@ docker push svizor/zoomcamp-model:mlops-3.10.0-slim
 
 ## Deadline
 
-The deadline for submitting is 19 June 2023 (Monday) 23:00 CEST. 
+The deadline for submitting is 26 June 2023 (Monday) 23:00 CEST. 
 After that, the form will be closed.
