@@ -64,6 +64,9 @@ The unit 4.6 consists of multiple videos:
 * [4.6.10 - Adding schedule](https://www.youtube.com/watch?v=0WpR3ZUINpA )
 * [4.6.11 - Overview Wrap up](https://www.youtube.com/watch?v=C5mM8Jkt2jI)
 
+
+[Old Video (2022 Edition)](https://www.youtube.com/watch?v=ekT_JW213Tc)
+
 ## 4.7 Choosing the right way of deployment
 
 COMING SOON
@@ -82,4 +85,5 @@ Did you take notes? Add them here:
 * [Notes on Model Deployment using Google Cloud Platform, by M. Ayoub C.](https://gist.github.com/Qfl3x/de2a9b98a370749a4b17a4c94ef46185)
 * [Week4: Notes on Model Deployment by Bhagabat](https://github.com/BPrasad123/MLOps_Zoomcamp/tree/main/Week4)
 * [Week 4: Deployment notes by Ayoub.B](https://github.com/ayoub-berdeddouch/mlops-journey/blob/main/deployment-04.md)
+* [Week 4: Deployment notes by Waleed](https://github.com/waleedayoub/mlops-zoomcamp/blob/main/cohorts/2023/04-deployment/module4notes.waleed.md)
 * Send a PR, add your notes above this line
