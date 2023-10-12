@@ -48,8 +48,7 @@
 
 ### 6.7 Homework
 
-
-More information here: TBD
+More information [here](../cohorts/2023/06-best-practices/homework.md).
 
 
 ### Notes
@@ -160,5 +159,5 @@ https://www.youtube.com/watch?v=jCNxqXCKh2s&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhE
 ### Notes
 
 Did you take notes? Add them here:
-
+* [Week 6 Best Practices: 2023](https://github.com/dimzachar/mlops-zoomcamp/tree/master/notes/Week_6)
 * Send a PR, add your notes above this line
